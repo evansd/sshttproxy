@@ -1,7 +1,7 @@
 # sshttproxy: a connect-on-demand SSH HTTP Proxy
 <small>(You have my permission to pronounce it _sh*t proxy_, if you wish)</small>
 
-sshttproxy parses the Host header of incoming HTTP requests, works out which remote host and port they are destined for, creates an SSH tunnel to that host and forwards the request. For example, requests for http://remote-host.example.com.8080.localhost will get forwarded to port 8080 on <tt>remote-host.example.com</tt>.
+sshttproxy parses the Host header of incoming HTTP requests, works out which remote host and port they are destined for, creates an SSH tunnel to that host and forwards the request. For example, requests for <tt>http://example.com.8080.localhost</tt> will get forwarded to port 8080 on <tt>example.com</tt>.
 
 
 ## Why?
@@ -41,15 +41,15 @@ It uses two third-party Python modules: [paramiko](http://www.lag.net/paramiko/)
 
 ## Notes
 
-**This won't be much use unless you can resolve arbitrary subdomains of localhost.**
+**This won't be much use unless you can resolve arbitrary subdomains of localhost.**<br />
 Obviously you could add entries to <tt>/etc/hosts</tt> every time but it kind of defeats the purpose of creating tunnels with zero configuration. Fortunately, it's easy to set this up: just use [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html). (See also my [brief guide](http://drhevans.com/blog/posts/106-wildcard-subdomains-of-localhost) to configuring dnsmasq.) It's a handy feature to have anyway for development purposes.
 
-**The app you're connecting to must be Host header agnostic.**
+**The app you're connecting to must be Host header agnostic.**<br />
 sshttproxy passes your entire request through untouched (it's a TCP-level proxy really) so the web app on the other end needs to not mind that the Host header ends in <tt>.localhost</tt>. This means, among other things, that virtual hosting won't work, so the app needs to be the only thing listening on that particular port. This shouldn't be too difficult to satisfy though, given that you can choose any arbitrary port with no firewalls to worry about.
 
-**Make sure the SSH keys you need are loaded into your key agent.**
+**Make sure the SSH keys you need are loaded into your key agent.**<br />
 sshttproxy makes no attempt to prompt you for your password or to load keys.
 
-**Make sure the host is in your <tt>known_hosts</tt> list.**
+**Make sure the host is in your <tt>known_hosts</tt> list.**<br />
 For simplicty and safety's sake, sshttproxy refuses to connect to any hosts it doesn't recognise.
 
