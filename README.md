@@ -28,7 +28,7 @@ Connect to your favourite server:
 Host headers are parsed as follows:
 
  * the rightmost all-numeric subdomain is treated as the remote port;
- * everything the to left of this is treated as the remote hostname;
+ * everything to the left of this is treated as the remote hostname;
  * everything to the right is ignored.
 
 
